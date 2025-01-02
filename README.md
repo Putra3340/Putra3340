@@ -5,7 +5,8 @@
 Putra3340/Putra3340 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
 --->
-function fetchConfig() {
+<script>
+          function fetchConfig() {
             fetch('https://putrartx.my.id/Api/BackendSharp.php')
                 .then(response => response.json())
                 .then(data => {
@@ -42,3 +43,5 @@ function fetchConfig() {
 
         // Fetch on page load
         window.onload = fetchConfig;
+  
+</script>
