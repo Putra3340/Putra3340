@@ -1,1 +1,779 @@
-<h1>HI</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahmad Dwi Syaputra - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            transform: skewY(-2deg);
+            margin-top: 2rem;
+        }
+        
+        .profile-content {
+            transform: skewY(2deg);
+            flex: 1;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00d4ff, #ffd700, #ffff00);
+            padding: 4px;
+            margin-left: 2rem;
+        }
+        
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #1a1a2e;
+        }
+        
+        .name {
+            font-family: 'Inter', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d4ff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            letter-spacing: -0.02em;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.02em;
+        }
+        
+        .bio {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #cccccc;
+            max-width: 600px;
+        }
+        
+        /* Achievements Section */
+        .achievements-section {
+            margin-bottom: 4rem;
+            transform: skewY(1deg);
+        }
+        
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            letter-spacing: -0.01em;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            transform: skewY(-1deg);
+        }
+        
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 255, 0.8);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+        
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .achievement-card:hover::before {
+            left: 100%;
+        }
+        
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .achievement-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .achievement-desc {
+            color: #cccccc;
+            line-height: 1.5;
+        }
+        
+        /* Projects Section */
+        .projects-section {
+            margin-bottom: 4rem;
+            transform: skewY(-1.5deg);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            transform: skewY(1.5deg);
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .project-card:hover {
+            transform: scale(1.05) rotateY(5deg);
+            border-color: rgba(255, 215, 0, 0.8);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #ffd700;
+        }
+        
+        .project-content {
+            padding: 2rem;
+        }
+        
+        .project-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+        
+        .project-desc {
+            color: #cccccc;
+            line-height: 1.6;
+        }
+        
+        /* Journal Section */
+        .journal-section {
+            transform: skewY(1deg);
+        }
+        
+        .journal-list {
+            transform: skewY(-1deg);
+        }
+        
+        .journal-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid #00d4ff;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 0 15px 15px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .journal-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-left-color: #ffd700;
+            transform: translateX(20px);
+        }
+        
+        .journal-date {
+            color: #00d4ff;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .journal-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+        
+        .journal-excerpt {
+            color: #cccccc;
+            line-height: 1.6;
+        }
+        
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(odd) {
+            animation-delay: -3s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .floating-1 {
+            top: 10%;
+            right: 10%;
+            font-size: 2rem;
+            color: #00d4ff;
+            opacity: 0.3;
+        }
+        
+        .floating-2 {
+            top: 60%;
+            left: 5%;
+            font-size: 1.5rem;
+            color: #ffd700;
+            opacity: 0.4;
+        }
+        
+        .floating-3 {
+            bottom: 20%;
+            right: 15%;
+            font-size: 2.5rem;
+            color: #ffff00;
+            opacity: 0.3;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+                transform: none;
+            }
+            
+            .profile-content {
+                transform: none;
+            }
+            
+            .profile-image {
+                margin: 2rem 0 0 0;
+            }
+            
+            .name {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .achievements-section,
+            .projects-section,
+            .journal-section {
+                transform: none;
+            }
+            
+            .achievements-grid,
+            .projects-grid,
+            .journal-list {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+    
+    <!-- Floating Elements -->
+    <div class="floating-element floating-1">🚀</div>
+    <div class="floating-element floating-2">🌙</div>
+    <div class="floating-element floating-3">🪐</div>
+    
+    <div class="container">
+        <!-- Profile Section -->
+        <section class="profile-section">
+            <div class="profile-content">
+                <h1 class="name">Rahmad Dwi Syaputra</h1>
+                <p class="title">Automation Engineer · Reverse Engineer · Software Developer</p>
+                <p class="bio">
+                Blending low-level insight with high-level execution. I engineer tools, desktop apps, and games using C#, ASP.NET, and Unity, with a strong focus on automation, system behavior analysis, and creative problem solving. Whether dissecting binaries or building sleek web platforms, I design solutions that are efficient, scalable, and precise.
+                </p>
+            </div>
+            <div class="profile-image">
+                <img src="/me.png" alt="Alex Nova">
+            </div>
+        </section>
+        
+        <!-- Achievements Section -->
+        <section class="achievements-section">
+            <h2 class="section-title">ACHIEVEMENTS</h2>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <span class="achievement-icon">💼</span>
+                    <h3 class="achievement-title">Web Automation Intern</h3>
+                    <p class="achievement-desc">Completed 6-month internship at PT. Universal Big Data, building automation tools with C#, Puppeteer, and .NET WebView.</p>
+                </div>
+                <div class="achievement-card">
+                    <span class="achievement-icon">🥇</span>
+                    <h3 class="achievement-title">Top 12 – Lomba Kompetensi Siswa Jatim 2025</h3>
+                    <p class="achievement-desc">Finalist in IT Software Solution for Business, representing East Java.</p>
+                </div>
+                <div class="achievement-card">
+                    <span class="achievement-icon">📜</span>
+                    <h3 class="achievement-title">C# Certification</h3>
+                    <p class="achievement-desc">Completed Foundational C# with Microsoft on freeCodeCamp</p>
+                </div>
+                <div class="achievement-card">
+                    <span class="achievement-icon">🌟</span>
+                    <h3 class="achievement-title">Reverse Engineer</h3>
+                    <p class="achievement-desc">See the Journal Section</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section class="projects-section">
+            <h2 class="section-title">PROJECTS</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">💵</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Loan Mate</h3>
+                        <p class="project-desc">
+                            A web application for managing loans and repayments. Built with ASP.NET Core, 
+                            Entity Framework. Features real-time notifications and automated 
+                            payment reminders.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">🏪</div>
+                    <div class="project-content">
+                        <h3 class="project-title">DigiMart</h3>
+                        <p class="project-desc">
+                            A Web-based e-commerce platform that automates inventory management and order processing.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">🤖</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Agen Pulsa Bot</h3>
+                        <p class="project-desc">
+                            Whatsapp bot for managing mobile top-ups and payments. Integrates with 
+                            multiple payment gateways and supports automated transactions.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">🎶</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Floatly</h3>
+                        <p class="project-desc">
+                            A Desktop application that provide music player with a unique floating lyrics interface.
+                            Built with C# and WPF, it features a sleek design and supports various audio formats.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Journal Section -->
+        <section class="journal-section">
+            <h2 class="section-title">JOURNAL</h2>
+            <div class="journal-list">
+            <article class="journal-item">
+                    <div class="journal-date">Started on 2025/07/11</div>
+                    <h3 class="journal-title">Securing Persistence: Preventing Lockout After Server Exploitation</h3>
+                    <p class="journal-excerpt">
+                    This article explores techniques to maintain access on a compromised server by bypassing user lockouts and avoiding detection. Covers stealth persistence, privilege re-escalation, and fallback entry methods post-exploit. For educational purposes only....
+                    </p>
+                </article>
+                
+                <article class="journal-item">
+                    <div class="journal-date">Started on 2025/06/22</div>
+                    <h3 class="journal-title">Breaking the Chain of Trust: SQL Exploitation for Server Access</h3>
+                    <p class="journal-excerpt">
+                        This Content is for sale.
+                        It details a sophisticated SQL injection attack that bypasses authentication mechanisms and exposes sensitive real data.
+                    This research demonstrates how crafted SQL queries can escalate access and compromise the trust boundary of a server system. It showcases real-world impact through authentication bypass and privileged data exposure...
+                    </p>
+                </article>
+                <article class="journal-item">
+                    <div class="journal-date">Started on 2024/09/11</div>
+                    <h3 class="journal-title">Revealing Sensitive Data through ASP.NET API and C# DLL Reverse Engineering</h3>
+                    <p class="journal-excerpt">
+                    This content is for sale.
+It contains real-world reverse engineering results and sensitive credential data extracted from an actual ASP.NET API and C# DLL.
+Serious inquiries only — contact me for access or collaboration....
+                    </p>
+                </article>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // Particle System
+        class ParticleSystem {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.resize();
+                this.init();
+                
+                window.addEventListener('resize', () => this.resize());
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            init() {
+                // Create different types of particles
+                for (let i = 0; i < 100; i++) {
+                    this.particles.push(new Star(this.canvas));
+                }
+                for (let i = 0; i < 5; i++) {
+                    this.particles.push(new Planet(this.canvas));
+                }
+                for (let i = 0; i < 3; i++) {
+                    this.particles.push(new Rocket(this.canvas));
+                }
+                for (let i = 0; i < 2; i++) {
+                    this.particles.push(new Moon(this.canvas));
+                }
+            }
+            
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.particles.forEach(particle => {
+                    particle.update();
+                    particle.draw(this.ctx);
+                });
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        class Star {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.reset();
+                this.opacity = Math.random();
+                this.twinkleSpeed = Math.random() * 0.02 + 0.01;
+            }
+            
+            reset() {
+                this.x = Math.random() * this.canvas.width;
+                this.y = Math.random() * this.canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.opacity += Math.sin(Date.now() * this.twinkleSpeed) * 0.01;
+                this.opacity = Math.max(0.1, Math.min(1, this.opacity));
+                
+                if (this.x < 0 || this.x > this.canvas.width || 
+                    this.y < 0 || this.y > this.canvas.height) {
+                    this.reset();
+                }
+            }
+            
+            draw(ctx) {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Add sparkle effect
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.moveTo(this.x - this.size * 2, this.y);
+                ctx.lineTo(this.x + this.size * 2, this.y);
+                ctx.moveTo(this.x, this.y - this.size * 2);
+                ctx.lineTo(this.x, this.y + this.size * 2);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        
+        class Planet {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.reset();
+                this.colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57'];
+                this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+                this.rotation = 0;
+            }
+            
+            reset() {
+                this.x = Math.random() * this.canvas.width;
+                this.y = Math.random() * this.canvas.height;
+                this.size = Math.random() * 20 + 10;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                
+                if (this.x < -this.size || this.x > this.canvas.width + this.size || 
+                    this.y < -this.size || this.y > this.canvas.height + this.size) {
+                    this.reset();
+                }
+            }
+            
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                
+                // Planet body
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Planet rings
+                ctx.strokeStyle = this.color;
+                ctx.globalAlpha = 0.3;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size * 1.5, this.size * 0.3, 0, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                ctx.restore();
+            }
+        }
+        
+        class Rocket {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.reset();
+                this.trail = [];
+            }
+            
+            reset() {
+                this.x = Math.random() * this.canvas.width;
+                this.y = this.canvas.height + 50;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = -Math.random() * 2 - 1;
+                this.size = Math.random() * 15 + 10;
+                this.angle = Math.atan2(this.speedY, this.speedX);
+            }
+            
+            update() {
+                this.trail.push({ x: this.x, y: this.y });
+                if (this.trail.length > 20) {
+                    this.trail.shift();
+                }
+                
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.y < -50) {
+                    this.reset();
+                }
+            }
+            
+            draw(ctx) {
+                // Draw trail
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 3;
+                ctx.globalAlpha = 0.6;
+                ctx.beginPath();
+                this.trail.forEach((point, index) => {
+                    if (index === 0) {
+                        ctx.moveTo(point.x, point.y);
+                    } else {
+                        ctx.lineTo(point.x, point.y);
+                    }
+                });
+                ctx.stroke();
+                
+                // Draw rocket
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle + Math.PI / 2);
+                ctx.globalAlpha = 1;
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.moveTo(0, -this.size);
+                ctx.lineTo(-this.size * 0.3, this.size * 0.5);
+                ctx.lineTo(this.size * 0.3, this.size * 0.5);
+                ctx.closePath();
+                ctx.fill();
+                
+                ctx.restore();
+            }
+        }
+        
+        class Moon {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.reset();
+                this.phase = Math.random() * Math.PI * 2;
+            }
+            
+            reset() {
+                this.x = Math.random() * this.canvas.width;
+                this.y = Math.random() * this.canvas.height;
+                this.size = Math.random() * 25 + 15;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.phase += 0.01;
+                
+                if (this.x < -this.size || this.x > this.canvas.width + this.size || 
+                    this.y < -this.size || this.y > this.canvas.height + this.size) {
+                    this.reset();
+                }
+            }
+            
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                
+                // Moon body
+                ctx.fillStyle = '#f0f0f0';
+                ctx.beginPath();
+                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Moon phase
+                ctx.fillStyle = '#1a1a2e';
+                ctx.beginPath();
+                ctx.arc(Math.cos(this.phase) * this.size * 0.3, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Craters
+                ctx.fillStyle = '#d0d0d0';
+                ctx.beginPath();
+                ctx.arc(-this.size * 0.3, -this.size * 0.2, this.size * 0.1, 0, Math.PI * 2);
+                ctx.arc(this.size * 0.2, this.size * 0.3, this.size * 0.15, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.restore();
+            }
+        }
+        
+        // Initialize particle system
+        const canvas = document.getElementById('particles-canvas');
+        const particleSystem = new ParticleSystem(canvas);
+        particleSystem.animate();
+        
+        // Add scroll-based animations
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = scrolled * 0.5;
+            
+            document.querySelectorAll('.floating-element').forEach((el, index) => {
+                const speed = (index + 1) * 0.3;
+                el.style.transform = `translateY(${parallax * speed}px)`;
+            });
+        });
+        
+        // Add hover effects to cards
+        document.querySelectorAll('.achievement-card, .project-card, .journal-item').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform += ' scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = card.style.transform.replace(' scale(1.02)', '');
+            });
+        });
+    </script>
+</body>
+</html>
